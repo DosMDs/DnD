@@ -349,12 +349,29 @@ SORT entity_id ASC
 
 ## Персонажи игроков
 
+### Активный персонаж
+
+\`\`\`dataview
+TABLE WITHOUT ID
+  link(file.path, title) as "Персонаж",
+  player_name as "Игрок",
+  class + " " + level + " ур." as "Класс / Ур.",
+  hp_current + " / " + hp_max as "HP",
+  "🟡 " + coin_gp + " gp" as "Кошелёк",
+  status as "Статус"
+FROM "${campaignFolderPath}/Players"
+WHERE type = "player_character" AND is_active = true
+\`\`\`
+
+### Все персонажи
+
 \`\`\`dataview
 TABLE WITHOUT ID
   link(file.path, title) as "Персонаж",
   player_name as "Игрок",
   class as "Класс",
   level as "Уровень",
+  is_active as "Активен",
   status as "Статус"
 FROM "${campaignFolderPath}/Players"
 WHERE type = "player_character"

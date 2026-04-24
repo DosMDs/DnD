@@ -78,3 +78,33 @@
 .dnd-action-faction button {
   border-left: 4px solid var(--color-purple);
 }
+
+/* ── Чар-лист персонажа ──────────────────────────────────────────────────── */
+
+/* Прогресс-бар HP */
+.metadata-input-wrapper[data-key="hp_current"] .metadata-property-value {
+  --mb-progress-bar-color: #e24b4a;
+}
+
+/* Подсветка нулевых HP */
+.metadata-property[data-key="hp_current"] .metadata-input-longtext:has([value="0"]) {
+  color: var(--color-red);
+  font-weight: 700;
+}
+
+/* Таблица характеристик — выравнивание числа */
+.HyperMD-table-row .cm-inline-code {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Секции чар-листа */
+.markdown-preview-view h2 {
+  border-bottom: 1px solid var(--color-border-secondary);
+  padding-bottom: 4px;
+}
+
+/* Кнопки HP — акцент */
+.dnd-action-hp-heal button  { border-left: 4px solid var(--color-green); }
+.dnd-action-hp-dmg button   { border-left: 4px solid var(--color-red); }
+.dnd-action-rest button     { border-left: 4px solid var(--color-blue); }
+.dnd-action-wallet button   { border-left: 4px solid var(--color-yellow); }
