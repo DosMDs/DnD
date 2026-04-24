@@ -32,7 +32,7 @@
     ""
   ],
   "startup_templates": [
-    ""
+    "00_System/Templates/System/Startup Auto Update.md"
   ],
   "intellisense_render": 1
 }

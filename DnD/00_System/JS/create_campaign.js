@@ -175,6 +175,16 @@ updated: ${startDate}
 >   type: runTemplaterFile
 >   templateFile: "00_System/Templates/System/Create Player.md"
 > \`\`\`
+>
+> \`\`\`meta-bind-button
+> label: Новая фракция
+> icon: flag
+> style: primary
+> class: dnd-action-button dnd-action-faction
+> action:
+>   type: runTemplaterFile
+>   templateFile: "00_System/Templates/System/Create Faction.md"
+> \`\`\`
 
 ##### ДОПОЛНИТЕЛЬНЫЕ ДЕЙСТВИЯ
 

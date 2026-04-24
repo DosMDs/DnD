@@ -28,6 +28,35 @@ module.exports = async (tp) => {
 
     const statusInput = await tp.system.prompt("Статус NPC:", "alive");
     const roleInput = await tp.system.prompt("Роль в истории:", "");
+
+    // Предлагаем выбрать из существующих фракций (если есть)
+    const factionsFolderPath = `${ctx.campaignFolderPath}/Factions`;
+    const factionFiles = ctx.vault
+      .getMarkdownFiles()
+      .filter((f) => f.path.startsWith(`${factionsFolderPath}/`) && /^\d{3}_Faction\.md$/.test(f.name))
+      .sort((a, b) => a.path.localeCompare(b.path));
+
+    let factionLink = "";
+    if (factionFiles.length > 0) {
+      const factionChoices = ["(без фракции)", ...factionFiles.map((f) => {
+        const cache = ctx.app.metadataCache.getFileCache(f);
+        return cache?.frontmatter?.title || f.basename;
+      })];
+      const factionChoice = await tp.system.suggester(factionChoices, factionChoices, false, "Фракция NPC:");
+      if (factionChoice && factionChoice !== "(без фракции)") {
+        const chosen = factionFiles.find((f) => {
+          const cache = ctx.app.metadataCache.getFileCache(f);
+          return (cache?.frontmatter?.title || f.basename) === factionChoice;
+        });
+        if (chosen) {
+          const factionTitle = ctx.app.metadataCache.getFileCache(chosen)?.frontmatter?.title || chosen.basename;
+          factionLink = `[[${chosen.path.replace(/\.md$/, "")}|${factionTitle}]]`;
+        }
+      }
+    } else {
+      const factionInput = await tp.system.prompt("Фракция (можно оставить пустым):", "");
+      factionLink = factionInput || "";
+    }
     const locationInput = await tp.system.prompt(
       "Домашняя локация (например 001_Location, можно оставить пустым):",
       "",
@@ -85,7 +114,7 @@ title: ${npcTitleInput}
 aliases:
   - ${npcTitleInput}
 status: ${statusInput || "alive"}
-faction:
+faction: ${factionLink ? `"${factionLink}"` : ""}
 role_in_story: ${roleInput || ""}
 home_location: ${homeLocation ? `"${homeLocation}"` : ""}
 first_seen: ${firstSeen ? `"${firstSeen}"` : ""}
@@ -162,7 +191,7 @@ updated: ${today}
 ##### ДОПОЛНИТЕЛЬНЫЕ ДЕЙСТВИЯ
 
 \`BUTTON[npc-edit-home-location, npc-edit-first-seen, npc-edit-last-seen]\`
-\`BUTTON[npc-aliases-sync]\`
+\`BUTTON[npc-set-faction, npc-aliases-sync]\`
 
 \`\`\`meta-bind-button
 id: npc-edit-home-location
@@ -206,6 +235,17 @@ hidden: true
 action:
   type: js
   file: "00_System/MetaBindJS/sync_title_to_aliases.js"
+\`\`\`
+
+\`\`\`meta-bind-button
+id: npc-set-faction
+label: Изменить фракцию
+icon: flag
+style: default
+hidden: true
+action:
+  type: js
+  file: "00_System/MetaBindJS/set_npc_faction.js"
 \`\`\`
 
 ## Описание

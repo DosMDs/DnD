@@ -106,6 +106,52 @@ function buildHarptosState(year, monthKey, day, hour) {
   return { ...state, world_date_label: formatHarptosDateLabel(state) };
 }
 
+function totalHoursToHarptosState(totalHours) {
+  const n = Number(totalHours);
+  if (!Number.isInteger(n) || n < 0) throw new Error("world_total_hours должен быть целым числом не меньше 0.");
+
+  let remainingDays = Math.floor(n / 24);
+  const worldHour = n % 24;
+
+  let year = 1;
+  while (true) {
+    const yearLength = 365 + (isHarptosLeapYear(year) ? 1 : 0);
+    if (remainingDays < yearLength) break;
+    remainingDays -= yearLength;
+    year += 1;
+  }
+
+  const segments = getHarptosSegments(year);
+  let segment = segments[0];
+  for (const item of segments) {
+    if (remainingDays < item.days) { segment = item; break; }
+    remainingDays -= item.days;
+  }
+
+  const state = {
+    world_year: year,
+    world_month_key: segment.key,
+    world_month_label: segment.label,
+    world_day: remainingDays + 1,
+    world_hour: worldHour,
+    world_total_hours: n,
+  };
+  return { ...state, world_date_label: formatHarptosDateLabel(state) };
+}
+
+function applyWorldStateToCampaign(app, campaignFile, newState, today) {
+  return app.fileManager.processFrontMatter(campaignFile, (fm) => {
+    fm.world_year        = newState.world_year;
+    fm.world_month_key   = newState.world_month_key;
+    fm.world_month_label = newState.world_month_label;
+    fm.world_day         = newState.world_day;
+    fm.world_hour        = newState.world_hour;
+    fm.world_total_hours = newState.world_total_hours;
+    fm.world_date_label  = newState.world_date_label;
+    fm.updated           = today;
+  });
+}
+
 function getDefaultHarptosState() {
   return buildHarptosState(
     HARPTOS_DEFAULTS.year,
@@ -232,4 +278,6 @@ module.exports = {
   buildSessionDisplayLink,
   buildLocationDisplayLink,
   updateCampaignLastSession,
+  totalHoursToHarptosState,
+  applyWorldStateToCampaign,
 };
