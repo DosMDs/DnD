@@ -210,10 +210,14 @@ function updateCampaignLastSession(app, campaignFile, sessionNo, sessionDate) {
 }
 
 // ─── Экспорт ─────────────────────────────────────────────────────────────────
+// Templater требует, чтобы module.exports содержал ТОЛЬКО функции.
+// Константы CAMPAIGNS_ROOT и CAMPAIGN_FOLDER_REGEX живут внутри модуля
+// и доступны через функции-геттеры.
 
 module.exports = {
-  CAMPAIGNS_ROOT,
-  CAMPAIGN_FOLDER_REGEX,
+  // Геттеры конфигурации (вместо экспорта констант)
+  getCampaignsRoot: () => CAMPAIGNS_ROOT,
+  getCampaignFolderRegex: () => CAMPAIGN_FOLDER_REGEX,
   // Harptos
   getDefaultHarptosState,
   buildHarptosState,
