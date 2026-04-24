@@ -1,0 +1,77 @@
+.callout[data-callout="actions"] .callout-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.callout[data-callout="actions"] .callout-content > * {
+  margin: 0;
+}
+
+.dnd-action-button button {
+  width: 100%;
+  min-height: 64px;
+  border-radius: 16px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.dnd-action-session button {
+  border-left: 4px solid var(--color-blue);
+}
+
+.dnd-action-quest button {
+  border-left: 4px solid var(--color-orange);
+}
+
+.dnd-action-npc button {
+  border-left: 4px solid var(--color-green);
+}
+
+.dnd-action-location button {
+  border-left: 4px solid var(--color-purple);
+}
+
+.dnd-action-log button {
+  border-left: 4px solid var(--color-cyan);
+}
+
+.dnd-action-item button {
+  border-left: 4px solid var(--color-yellow);
+}
+
+.dnd-action-player button {
+  border-left: 4px solid var(--color-red);
+}
+
+.callout[data-callout="actions-row"] .callout-content {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.callout[data-callout="actions-row"] .callout-content > * {
+  margin: 0;
+  flex: 1 1 0;
+}
+
+.dnd-action-status button {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 14px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-left: 4px solid var(--color-purple);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  white-space: nowrap;
+}
+
+.dnd-action-status button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+.dnd-action-status button .lucide {
+  margin-right: 8px;
+}

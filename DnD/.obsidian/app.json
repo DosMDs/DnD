@@ -1,0 +1,12 @@
+{
+  "defaultViewMode": "preview",
+  "attachmentFolderPath": "00_System/Media",
+  "showUnsupportedFiles": true,
+  "userIgnoreFilters": [
+    "00_System/",
+    "99_Archive/"
+  ],
+  "promptDelete": false,
+  "showInlineTitle": false,
+  "propertiesInDocument": "hidden"
+}

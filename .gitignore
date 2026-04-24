@@ -1,0 +1,23 @@
+# ─── Приватный контент кампаний ──────────────────────────────────────────────
+*_Campaign/
+
+# ─── Obsidian — личные и временные файлы ────────────────────────────────────
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+
+# ─── Бинарники плагинов (устанавливать через Obsidian Community Plugins) ─────
+# Хранить только manifest.json и data.json (настройки)
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+
+# ─── Операционные системы ────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+
+# ─── Временные файлы ─────────────────────────────────────────────────────────
+*.tmp
+*.log
